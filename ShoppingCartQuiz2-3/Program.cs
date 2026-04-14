@@ -34,5 +34,8 @@ namespace ShoppingCartQuiz2_3
 
             int[] cartQty = new int[3];
             double[] cartTotal = new double[3];
+
+            while (true)
+            {
         }
 }
