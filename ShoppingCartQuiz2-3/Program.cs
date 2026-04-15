@@ -36,6 +36,41 @@ namespace ShoppingCartQuiz2_3
             double[] cartTotal = new double[3];
 
             while (true)
+        {
+            Console.WriteLine("\n=== STORE MENU ===");
+            for (int i = 0; i < products.Length; i++)
             {
+                products[i].Show();
+            }
+
+            Console.Write("\nEnter product number: ");
+            int choice;
+            if (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > products.Length)
+            {
+                Console.WriteLine("Invalid product number.");
+                continue;
+            }
+
+            Product p = products[choice - 1];
+
+            if (p.Stock == 0)
+            {
+                Console.WriteLine("Product is out of stock.");
+                continue;
+            }
+
+            Console.Write("Enter quantity: ");
+            int qty;
+            if (!int.TryParse(Console.ReadLine(), out qty) || qty <= 0)
+            {
+                Console.WriteLine("Invalid quantity.");
+                continue;
+            }
+
+            if (qty > p.Stock)
+            {
+                Console.WriteLine("Not enough stock available.");
+                continue;
+            }
         }
 }
