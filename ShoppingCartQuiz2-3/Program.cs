@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace ShoppingCartQuiz2_3
 {
-    class Product
+   class Product
     {
         public int Id;
         public string Name;
@@ -36,41 +36,86 @@ namespace ShoppingCartQuiz2_3
             double[] cartTotal = new double[3];
 
             while (true)
-        {
-            Console.WriteLine("\n=== STORE MENU ===");
+            {
+                Console.WriteLine("\n=== STORE MENU ===");
+                for (int i = 0; i < products.Length; i++)
+                {
+                    products[i].Show();
+                }
+
+                Console.Write("\nEnter product number: ");
+                int choice;
+                if (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > products.Length)
+                {
+                    Console.WriteLine("Invalid product number.");
+                    continue;
+                }
+
+                Product p = products[choice - 1];
+
+                if (p.Stock == 0)
+                {
+                    Console.WriteLine("Product is out of stock.");
+                    continue;
+                }
+
+                Console.Write("Enter quantity: ");
+                int qty;
+                if (!int.TryParse(Console.ReadLine(), out qty) || qty <= 0)
+                {
+                    Console.WriteLine("Invalid quantity.");
+                    continue;
+                }
+
+                if (qty > p.Stock)
+                {
+                    Console.WriteLine("Not enough stock available.");
+                    continue;
+                }
+
+                cartQty[choice - 1] += qty;
+                cartTotal[choice - 1] += qty * p.Price;
+
+                p.Stock -= qty;
+
+                Console.WriteLine("Added to cart!");
+
+                Console.Write("Add more? (Y/N): ");
+                string ans = Console.ReadLine().ToUpper();
+                if (ans == "N")
+                    break;
+            }
+
+            double grandTotal = 0;
+            Console.WriteLine("\n=== RECEIPT ===");
+
             for (int i = 0; i < products.Length; i++)
             {
-                products[i].Show();
+                if (cartQty[i] > 0)
+                {
+                    Console.WriteLine(products[i].Name + " x" + cartQty[i] + " = ₱" + cartTotal[i]);
+                    grandTotal += cartTotal[i];
+                }
             }
 
-            Console.Write("\nEnter product number: ");
-            int choice;
-            if (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > products.Length)
+            Console.WriteLine("Grand Total: ₱" + grandTotal);
+
+            double discount = 0;
+            if (grandTotal >= 5000)
             {
-                Console.WriteLine("Invalid product number.");
-                continue;
+                discount = grandTotal * 0.10;
+                Console.WriteLine("Discount (10%): ₱" + discount);
             }
 
-            Product p = products[choice - 1];
+            double finalTotal = grandTotal - discount;
+            Console.WriteLine("Final Total: ₱" + finalTotal);
 
-            if (p.Stock == 0)
+            Console.WriteLine("\n=== UPDATED STOCK ===");
+            for (int i = 0; i < products.Length; i++)
             {
-                Console.WriteLine("Product is out of stock.");
-                continue;
+                Console.WriteLine(products[i].Name + ": " + products[i].Stock);
             }
 
-            Console.Write("Enter quantity: ");
-            int qty;
-            if (!int.TryParse(Console.ReadLine(), out qty) || qty <= 0)
-            {
-                Console.WriteLine("Invalid quantity.");
-                continue;
-            }
-
-            if (qty > p.Stock)
-            {
-                Console.WriteLine("Not enough stock available.");
-                continue;
-            }
         }
+    }
 }
