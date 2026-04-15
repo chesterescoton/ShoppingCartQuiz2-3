@@ -29,11 +29,15 @@ namespace ShoppingCartQuiz2_3
             Product[] products = {
                 new Product { Id = 1, Name = "Laptop", Price = 30000, Stock = 5 },
                 new Product { Id = 2, Name = "Mouse", Price = 500, Stock = 10 },
-                new Product { Id = 3, Name = "Keyboard", Price = 1000, Stock = 7 }
-            };
+                new Product { Id = 3, Name = "Keyboard", Price = 1000, Stock = 7 },
+                new Product { Id = 4, Name = "Monitor", Price = 7000, Stock = 4 },
+                new Product { Id = 5, Name = "Headset", Price = 1500, Stock = 6 },
+                new Product { Id = 6, Name = "USB Flash Drive", Price = 300, Stock = 15 },
+                new Product { Id = 7, Name = "Webcam", Price = 1200, Stock = 5 }
+};
 
-            int[] cartQty = new int[3];
-            double[] cartTotal = new double[3];
+            int[] cartQty = new int[7];
+            double[] cartTotal = new double[7];
 
             while (true)
             {
