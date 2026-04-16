@@ -8,6 +8,8 @@ On Day 3, I finished the rest of the program. I added the part where the selecte
 # Day 4
 I Created the flowchart and double checked my work
 
+# AI USAGE
+
 I used AI to guide me with certain stuff that I was lost with, I used it to create examples that were similar in function so that I could learn about it. 
 Prompts I used were
 "Can you create an example of creating a class"
