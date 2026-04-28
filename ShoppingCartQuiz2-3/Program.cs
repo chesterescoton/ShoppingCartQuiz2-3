@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace ShoppingCartQuiz2_3
 {
-   class Product
+    class Product
     {
         public int Id;
         public string Name;
@@ -20,8 +20,33 @@ namespace ShoppingCartQuiz2_3
         {
             Console.WriteLine(Id + ". " + Name + " - ₱" + Price + " (Stock: " + Stock + ")");
         }
+
+        public double GetItemTotal(int qty)
+        {
+            return qty * Price;
+        }
+
+        public bool HasEnoughStock(int qty)
+        {
+            return qty <= Stock;
+        }
+
+        public void DeductStock(int qty)
+        {
+            Stock -= qty;
+        }
     }
 
+    class CartItem
+    {
+        public Product Product;
+        public int Quantity;
+
+        public double GetTotal()
+        {
+            return Product.GetItemTotal(Quantity);
+        }
+    }
     internal class Program
     {
         static void Main(string[] args)
@@ -34,17 +59,24 @@ namespace ShoppingCartQuiz2_3
                 new Product { Id = 5, Name = "Headset", Price = 1500, Stock = 6 },
                 new Product { Id = 6, Name = "USB Flash Drive", Price = 300, Stock = 15 },
                 new Product { Id = 7, Name = "Webcam", Price = 1200, Stock = 5 }
-};
+             }
+            ;
 
-            int[] cartQty = new int[7];
-            double[] cartTotal = new double[7];
+            CartItem[] cart = new CartItem[5];
+            int cartCount = 0;
 
             while (true)
             {
                 Console.WriteLine("\n=== STORE MENU ===");
-                for (int i = 0; i < products.Length; i++)
+                foreach (var product in products)
                 {
-                    products[i].Show();
+                    product.Show();
+                }
+
+                if (cartCount == cart.Length)
+                {
+                    Console.WriteLine("Cart is full! Cannot add more items.");
+                    break;
                 }
 
                 Console.Write("\nEnter product number: ");
@@ -55,9 +87,9 @@ namespace ShoppingCartQuiz2_3
                     continue;
                 }
 
-                Product p = products[choice - 1];
+                Product selected = products[choice - 1];
 
-                if (p.Stock == 0)
+                if (selected.Stock == 0)
                 {
                     Console.WriteLine("Product is out of stock.");
                     continue;
@@ -71,16 +103,34 @@ namespace ShoppingCartQuiz2_3
                     continue;
                 }
 
-                if (qty > p.Stock)
+                if (!selected.HasEnoughStock(qty))
                 {
                     Console.WriteLine("Not enough stock available.");
                     continue;
                 }
 
-                cartQty[choice - 1] += qty;
-                cartTotal[choice - 1] += qty * p.Price;
+                bool found = false;
+                for (int i = 0; i < cartCount; i++)
+                {
+                    if (cart[i].Product == selected)
+                    {
+                        cart[i].Quantity += qty;
+                        found = true;
+                        break;
+                    }
+                }
 
-                p.Stock -= qty;
+                if (!found)
+                {
+                    cart[cartCount] = new CartItem
+                    {
+                        Product = selected,
+                        Quantity = qty
+                    };
+                    cartCount++;
+                }
+
+                selected.DeductStock(qty);
 
                 Console.WriteLine("Added to cart!");
 
@@ -93,13 +143,11 @@ namespace ShoppingCartQuiz2_3
             double grandTotal = 0;
             Console.WriteLine("\n=== RECEIPT ===");
 
-            for (int i = 0; i < products.Length; i++)
+            for (int i = 0; i < cartCount; i++)
             {
-                if (cartQty[i] > 0)
-                {
-                    Console.WriteLine(products[i].Name + " x" + cartQty[i] + " = ₱" + cartTotal[i]);
-                    grandTotal += cartTotal[i];
-                }
+                double total = cart[i].GetTotal();
+                Console.WriteLine(cart[i].Product.Name + " x" + cart[i].Quantity + " = ₱" + total);
+                grandTotal += total;
             }
 
             Console.WriteLine("Grand Total: ₱" + grandTotal);
@@ -115,11 +163,10 @@ namespace ShoppingCartQuiz2_3
             Console.WriteLine("Final Total: ₱" + finalTotal);
 
             Console.WriteLine("\n=== UPDATED STOCK ===");
-            for (int i = 0; i < products.Length; i++)
+            foreach (var product in products)
             {
-                Console.WriteLine(products[i].Name + ": " + products[i].Stock);
+                Console.WriteLine(product.Name + ": " + product.Stock);
             }
-
         }
     }
 }
