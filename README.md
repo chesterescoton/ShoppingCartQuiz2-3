@@ -10,7 +10,10 @@ I Created the flowchart and double checked my work
 
 # AI USAGE
 
-I used AI to guide me with certain stuff that I was lost with, I used it to create examples that were similar in function so that I could learn about it. 
-Prompts I used were
-"Can you create an example of creating a class"
-"What went wrong here"
+ AI Usage:
+ I used AI to help improve the structure of my shopping cart program. It suggested separating logic
+ into methods such as checking if there is enough stock, calculating the total price of an item,
+ and updating stock after a purchase. This helped reduce the amount of code inside Main and made
+ the program more organized. I also used AI guidance to understand how to properly use arrays for
+ storing cart quantities and totals. After applying the suggestions, I manually reviewed and adjusted
+ the code to make sure it still fits the requirements and is easy to understand.
