@@ -5,11 +5,19 @@ One of the most helpful parts was organizing my code into methods like AddToCart
 However, I did not just copy everything from AI. I still wrote the code myself and decided how the final program should work. I used AI more as a guide, reference, and learning tool rather than a full solution generator.
 # Some example prompts I used while working on this program were:
 -- “How do I connect a Product class with a shopping cart using arrays in C#?”
+
 -- “How do I prevent stock from going negative when adding items to a cart?”
+
 -- “Can you help me structure a console shopping cart system with Add to Cart, Remove, and Checkout?”
+
 -- “What is the best way to validate user input in C# so the program doesn’t crash?”
+
 -- “How do I update quantity in a cart while also updating product stock correctly?”
+
 -- “Should I use List or array for order history in a simple C# project?”
+
 -- “How do I calculate total price and apply a discount only if total reaches a certain amount?”
+
 -- “How can I organize my C# code into functions like CartMenu and Checkout to make it cleaner?”
+
 # Overall, AI helped me learn faster and understand how to build a working system step by step. It made me more confident in debugging, structuring code, and improving logic while still keeping my own understanding and decisions in the final output.
